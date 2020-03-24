@@ -8,7 +8,7 @@ from utils.country_data import compute_countries_confirmed_cases,compute_countri
 from utils.growth_rate import compute_growth_rate
 
 ALIGN_AROUND_CASES = 400 # cases
-ALIGN_AROUND_DEATHS = 5  # deaths
+ALIGN_AROUND_DEATHS = 20  # deaths
 
 if __name__ == "__main__":
     # Compute the number of cases for each country
@@ -22,7 +22,7 @@ if __name__ == "__main__":
         align_indexes_cases[c] = np.argmin(dist)
 
     align_indexes_deaths = defaultdict(list)
-    for c, v in confirmed.items():
+    for c, v in deaths.items():
         dist = np.abs(np.array(v) - ALIGN_AROUND_DEATHS)
         align_indexes_deaths[c] = np.argmin(dist)
 

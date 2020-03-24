@@ -23,8 +23,7 @@ with open(f) as json_file:
 def parse_countries() -> list:
     countries = list(data.keys())
 
-    default_countries = ["Germany", "US", "Spain", "Norway", "Italy", "Korea, South", "Japan", "United Kingdom", "China"]
-    #default_countries = ["US", "Spain", "Italy"]
+    default_countries = ["Turkey", "Spain", "Italy","Iran","US"]
     all_countries = list()
 
     new_countries = sys.argv[1:]
