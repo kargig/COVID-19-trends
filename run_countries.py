@@ -15,20 +15,24 @@ if __name__ == "__main__":
     confirmed = compute_countries_confirmed_cases()
     deaths = compute_countries_confirmed_deaths()
 
+    # Compute maximum number of cases we can align around: min (ALIGN_AROUND, x)
+    # Take the second biggest one
+    minimums = [sorted(v)[-2] for c, v in confirmed.items()]
+    new_align_around = np.minimum(ALIGN_AROUND, np.min(minimums))
+
     # Compute the index for each country in order to align around the same number of cases
     align_indexes_cases = defaultdict(list)
     for c, v in confirmed.items():
-        dist = np.abs(np.array(v) - ALIGN_AROUND_CASES)
+        dist = np.abs(np.array(v) - new_align_around)
         align_indexes_cases[c] = np.argmin(dist)
 
     align_indexes_deaths = defaultdict(list)
     for c, v in deaths.items():
         dist = np.abs(np.array(v) - ALIGN_AROUND_DEATHS)
-        align_indexes_deaths[c] = np.argmin(dist)
-
+        align_indexes[c] = np.argmin(dist)
 
     growths = compute_growth_rate(confirmed)
 
-    plot_cases(confirmed, align_indexes_cases, ALIGN_AROUND_CASES)
+    plot_cases(confirmed, align_indexes, new_align_around)
     plot_deaths(deaths, align_indexes_deaths, ALIGN_AROUND_DEATHS)
-    plot_growth(growths, align_indexes_cases, ALIGN_AROUND_CASES)
+    plot_growth(growths, align_indexes, new_align_around)
